@@ -1,0 +1,27 @@
+#language: pt
+
+Funcionalidade: Confirmação de pedidos pela API
+
+  Cenário: Criar pedido com sucesso
+    Dado que possuo um pedido válido
+    Quando confirmo o pedido com o cupom "BEMVINDO10"
+    Então a API de pedidos deve retornar status 201
+    E o número do pedido deve seguir o padrão "VZ-000000"
+    E o subtotal do pedido deve ser 100.00
+    E o desconto do pedido deve ser 10.00
+    E o frete do pedido deve ser 19.90
+    E o total do pedido deve ser 109.90
+
+
+  Cenário: Não confirmar pedido com cupom inexistente
+    Dado que possuo um pedido válido
+    Quando confirmo o pedido com o cupom "INVALIDO"
+    Então a API de pedidos deve retornar status 422
+    E o código de erro deve ser "CUPOM_INVALIDO"
+
+
+  Cenário: Não confirmar pedido com cupom expirado
+    Dado que possuo um pedido válido
+    Quando confirmo o pedido com o cupom "VERAO2026"
+    Então a API de pedidos deve retornar status 422
+    E o código de erro deve ser "CUPOM_EXPIRADO"
