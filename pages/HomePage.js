@@ -1,38 +1,70 @@
 class HomePage {
 
     constructor(page) {
+
         this.page = page;
-        this.url = 'https://verzel-store.qa-test-verzel-store.workers.dev/';
+
+        this.url =
+            'https://verzel-store.qa-test-verzel-store.workers.dev/';
     }
 
     async acessar() {
-        await this.page.goto(this.url, {
-            waitUntil: 'networkidle'
-        });
+
+        await this.page.goto(
+            this.url,
+            {
+                waitUntil: 'networkidle'
+            }
+        );
     }
 
-    async adicionarProduto(nomeProduto, quantidade = 1) {
+    async adicionarProduto(
+        nomeProduto,
+        quantidade = 1
+    ) {
 
-        const produto = this.page
-            .locator('body')
-            .getByText(nomeProduto, { exact: true })
-            .first();
+        const produto =
+            this.page
+                .getByText(
+                    nomeProduto,
+                    {
+                        exact: true
+                    }
+                )
+                .first();
 
         await produto.scrollIntoViewIfNeeded();
 
-        const card = produto.locator('xpath=ancestor::*[self::div or self::article][1]');
+        const card =
+            produto.locator(
+                'xpath=ancestor::*[self::div or self::article][1]'
+            );
 
-        const botaoAdicionar = card.getByRole('button').first();
+        const botaoAdicionar =
+            card
+                .getByRole('button')
+                .first();
 
-        for (let i = 0; i < quantidade; i++) {
+        for (
+            let i = 0;
+            i < quantidade;
+            i++
+        ) {
+
             await botaoAdicionar.click();
         }
     }
 
     async acessarCarrinho() {
-        await this.page.getByRole('link', {
-            name: /carrinho/i
-        }).click();
+
+        await this.page
+            .getByRole(
+                'link',
+                {
+                    name: /carrinho/i
+                }
+            )
+            .click();
     }
 }
 

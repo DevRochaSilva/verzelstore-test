@@ -37,9 +37,10 @@ function proximoNumeroScreenshot() {
     const numeros = arquivos
         .map(arquivo => {
 
-            const match = arquivo.match(
-                /verzel_(\d+)_FAILED\.png/
-            );
+            const match =
+                arquivo.match(
+                    /verzel_(\d+)_FAILED\.png/
+                );
 
             return match
                 ? parseInt(match[1], 10)
@@ -58,31 +59,50 @@ function proximoNumeroScreenshot() {
 
 Before(async function () {
 
-    // Navegador para testes de interface
-    this.browser = await chromium.launch({
-        headless: false
-    });
+    // Browser para UI
+    this.browser =
+        await chromium.launch({
+            headless: false
+        });
 
-    this.context = await this.browser.newContext();
+    this.context =
+        await this.browser.newContext();
 
-    this.page = await this.context.newPage();
+    this.page =
+        await this.context.newPage();
 
-
-    // Contexto HTTP para testes de API
-    this.request = await request.newContext({
-        baseURL: BASE_URL,
-
-        extraHTTPHeaders: {
-            'Content-Type': 'application/json'
-        }
-    });
+    // Contexto HTTP para API
+    this.request =
+        await request.newContext({
+            baseURL: BASE_URL,
+            extraHTTPHeaders: {
+                'Content-Type':
+                    'application/json'
+            }
+        });
 });
 
 After(async function (scenario) {
 
-    // Screenshot somente quando o cenário falhar
+    const tags =
+        scenario.pickle.tags.map(
+            tag => tag.name
+        );
+
+    const isUI =
+        tags.includes('@ui');
+
+    const isAPI =
+        tags.includes('@api');
+
+    const falhou =
+        scenario.result?.status ===
+        Status.FAILED;
+
+    // Screenshot apenas de falhas de UI
     if (
-        scenario.result?.status === Status.FAILED &&
+        falhou &&
+        isUI &&
         this.page
     ) {
 
@@ -111,22 +131,35 @@ After(async function (scenario) {
         );
     }
 
-    // Fecha API
+    // JSON como evidência para falha de API
+    if (
+        falhou &&
+        isAPI &&
+        this.responseBody
+    ) {
+
+        await this.attach(
+            JSON.stringify(
+                this.responseBody,
+                null,
+                2
+            ),
+            'application/json'
+        );
+    }
+
     if (this.request) {
         await this.request.dispose();
     }
 
-    // Fecha página
     if (this.page) {
         await this.page.close();
     }
 
-    // Fecha contexto
     if (this.context) {
         await this.context.close();
     }
 
-    // Fecha navegador
     if (this.browser) {
         await this.browser.close();
     }

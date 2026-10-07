@@ -5,12 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "cucumber-js",
-    "test:ui": "cucumber-js features/cupom_e_frete_gratis.feature",
-    "test:api": "cucumber-js features/carrinho_api.feature features/pedidos_api.feature"
-  },
-  "devDependencies": {
-    "@cucumber/cucumber": "^12.0.0",
-    "@playwright/test": "^1.56.0",
-    "playwright": "^1.56.0"
+    "test:pass": "cucumber-js --tags '@pass'",
+    "test:bug": "cucumber-js --tags '@bug'",
+    "report": "start logs\\cucumber-report.html"
   }
 }
