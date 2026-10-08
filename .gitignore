@@ -1,12 +1,9 @@
 node_modules/
 
-logs/
-screenshots/
-
-*.log
-
 .env
 .env.*
+*.png
+*.html
 
 .vscode/
 .idea/
