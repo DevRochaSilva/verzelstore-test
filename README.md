@@ -330,13 +330,9 @@ Relatório HTML + JSON
 
 # Testes manuais e exploratórios
 
-Os cenários manuais, testes exploratórios, resultados esperados e pontos de atenção estão documentados em:
+Os testes manuais, resultados obtidos e respectivas evidências estão documentados em:
 
-```text
-docs/Testes_Manuais_Exploratorios.md
-```
-
-O documento complementa a automação e contempla os demais critérios de aceite que não fazem parte da suíte automatizada final.
+[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 ---
 
