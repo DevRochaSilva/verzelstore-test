@@ -99,6 +99,8 @@ VerzelStore-Test/
 │   ├── Testes_Manuais_Exploratorios.md
 
 │   └── evidencias/
+'   
+    └── relatorio/
 
 │
 
@@ -833,6 +835,9 @@ logs/cucumber-report.json
 logs/screenshots/
 
 ```
+## Relatório de Refinamento
+
+[Acesse o refinamento](docs/relatorio/VerzelStore%20Refinamento.pdf)
 
 ---
 
