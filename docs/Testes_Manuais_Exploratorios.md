@@ -375,7 +375,7 @@ Feito teste em todos os itens da interface em busca de bug, todos itens aceitam 
 
 **Evidência:** ![Evidência TM-010_PASS](evidencias/TM/TM-010_PASS.png)&#x20;
 
-               ![Evidência TM-010_BONUS](evidencias/TM/TM-010_BONUS.png)
+               ![Evidência TM-010_PASS_BONUS](evidencias/TM/TM-010_PASS_BONUS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
