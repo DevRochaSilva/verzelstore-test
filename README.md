@@ -1,31 +1,47 @@
 # Verzel Store — Desafio de QA
 
-Projeto de testes da **Verzel Store**, desenvolvido a partir da documentação e dos critérios de aceite fornecidos no desafio.
+Projeto de testes da **Verzel Store**, desenvolvido a partir da documentação, dos critérios de aceite e das evidências obtidas durante as execuções manuais e automatizadas.
 
 ## Objetivo
 
 Validar as principais regras de negócio da aplicação, com foco em:
 
 - frete grátis;
-- cobrança de frete abaixo do limite;
-- cálculo de subtotal, frete e total;
-- regras de cálculo da API;
-- fluxo principal do carrinho.
 
-A automação foi implementada utilizando **Playwright + Cucumber**, com cenários escritos em **Gherkin** e geração de relatórios em **HTML e JSON**.
+- cobrança de frete abaixo do limite;
+
+- cálculo de subtotal, desconto, frete e total;
+
+- regras de cálculo da API;
+
+- fluxo principal do carrinho;
+
+- consistência entre interface, API e documentação.
+
+A automação foi implementada com **Playwright + Cucumber**, utilizando cenários em **Gherkin**, Page Object Model e geração de relatórios em **HTML e JSON**.
 
 ---
 
 ## Ambiente
 
 - Aplicação: `https://verzel-store.qa-test-verzel-store.workers.dev/`
+
 - Documentação: `https://verzel-store.qa-test-verzel-store.workers.dev/documentacao`
+
 - API base: `https://verzel-store.qa-test-verzel-store.workers.dev/api`
+
 - Node.js
+
 - Playwright
+
 - Cucumber JS
 
-> O ambiente é compartilhado entre candidatos.  
+- Google Chrome / Chromium
+
+- Windows 11
+
+> O ambiente é compartilhado entre candidatos.  
+
 > O carrinho é mantido apenas na aba atual do navegador e a API não persiste dados entre as requisições.
 
 ---
@@ -33,34 +49,65 @@ A automação foi implementada utilizando **Playwright + Cucumber**, com cenári
 ## Estrutura do projeto
 
 ```text
+
 VerzelStore-Test/
+
 ├── features/
-│   ├── regras_carrinho.feature
-│   ├── bug_frete_api.feature
-│   └── smoke.feature
+
+│   ├── regras_carrinho.feature
+
+│   ├── bug_frete_api.feature
+
+│   └── smoke.feature
+
 │
+
 ├── step_definitions/
-│   ├── carrinho.steps.js
-│   └── carrinho_api.steps.js
+
+│   ├── carrinho.steps.js
+
+│   └── carrinho_api.steps.js
+
 │
+
 ├── pages/
-│   ├── HomePage.js
-│   └── CarrinhoPage.js
+
+│   ├── HomePage.js
+
+│   └── CarrinhoPage.js
+
 │
+
 ├── support/
-│   └── hooks.js
+
+│   └── hooks.js
+
 │
+
 ├── logs/
-│   ├── cucumber-report.html
-│   ├── cucumber-report.json
-│   └── screenshots/
+
+│   ├── cucumber-report.html
+
+│   ├── cucumber-report.json
+
+│   └── screenshots/
+
 │
+
 ├── docs/
-│   └── Testes_Manuais_Exploratorios.md
+
+│   ├── Testes_Manuais_Exploratorios.md
+
+│   └── evidencias/
+
 │
+
 ├── cucumber.js
+
 ├── package.json
+
 └── README.md
+
 ```
 
 ---
@@ -70,50 +117,63 @@ VerzelStore-Test/
 É necessário possuir:
 
 - Node.js
+
 - npm
 
 ---
 
 ## Instalação
 
-Na raiz do projeto, instale as dependências:
+Na raiz do projeto:
 
 ```bash
+
 npm install
+
 ```
 
-Em seguida, instale o Chromium utilizado pelo Playwright:
+Instale o Chromium utilizado pelo Playwright:
 
 ```bash
+
 npx playwright install chromium
+
 ```
 
 ---
 
 ## Como executar
 
-### Executar toda a suíte
+### Suíte principal
 
 ```bash
+
 npm test
+
 ```
 
-### Executar somente os testes de interface
+### Testes de interface
 
 ```bash
+
 npm run test:ui
+
 ```
 
-### Executar somente o teste de API
+### Teste de API
 
 ```bash
+
 npm run test:api
+
 ```
 
-### Executar Smoke Test
+### Smoke Test
 
 ```bash
+
 npm run test:smoke
+
 ```
 
 ---
@@ -123,237 +183,403 @@ npm run test:smoke
 Após a execução, os relatórios são gerados em:
 
 ```text
+
 logs/cucumber-report.html
+
 logs/cucumber-report.json
+
 ```
 
 Para abrir o relatório HTML no Windows:
 
 ```bash
+
 npm run report
+
 ```
 
 ou:
 
 ```powershell
+
 start .\logs\cucumber-report.html
+
 ```
 
-O relatório HTML apresenta:
+O relatório apresenta:
 
-- cenários aprovados;
-- cenários reprovados;
+- cenários aprovados e reprovados;
+
 - steps executados;
-- mensagem de erro;
+
+- mensagens de erro;
+
 - duração;
+
 - evidências anexadas pelo Cucumber.
 
 ---
 
 ## Evidências
 
-O projeto diferencia evidências de falhas de **interface** e **API**.
+O projeto diferencia evidências de **interface** e **API**.
 
 ### Falhas de interface
 
-Quando um cenário marcado com `@ui` falha, o hook `After` captura automaticamente uma screenshot.
-
-As imagens são armazenadas em:
+Quando um cenário marcado com `@ui` falha, o hook `After` captura uma screenshot automaticamente.
 
 ```text
+
 logs/screenshots/
+
 ```
 
 Exemplo:
 
 ```text
-verzel_001_FAILED.png
-```
 
-A screenshot também é anexada ao relatório do Cucumber.
+verzel_001_FAILED.png
+
+```
 
 ### Falhas de API
 
-Quando um cenário marcado com `@api` falha, a resposta JSON retornada pela API é anexada diretamente ao relatório.
+Quando um cenário marcado com `@api` falha, a resposta JSON retornada pela API é anexada ao relatório do Cucumber.
 
-Isso permite visualizar os valores efetivamente retornados pelo backend sem depender de screenshots.
+As evidências dos testes manuais e exploratórios estão documentadas em:
+
+[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 ---
 
-# Resultado da automação
+# Status atual da validação
 
-A primeira execução automatizada registrou:
+Durante a comparação entre os testes automatizados e a execução manual do **TM-006**, foi identificado um falso positivo no cenário de frete grátis com subtotal exatamente igual a R$ 200,00.
+
+A primeira execução automatizada havia registrado:
 
 ```text
+
 4 scenarios (1 failed, 3 passed)
+
 21 steps (1 failed, 1 skipped, 19 passed)
+
 ```
 
-Durante o confronto entre a automação e a execução manual do **TM-006**, foi identificado que o cenário de frete grátis exatamente em R$ 200,00 havia gerado um **falso positivo na automação de UI**.
-
-O step utilizado validava apenas a existência do texto `R$ 0,00` na página. Como a interface apresentava a mensagem:
+O falso positivo ocorreu porque a validação procurava apenas a ocorrência de:
 
 ```text
+
+R$ 0,00
+
+```
+
+no conteúdo da página. Entretanto, a interface apresentava:
+
+```text
+
+Frete: R$ 19,90
+
 Faltam R$ 0,00 para o frete grátis
+
 ```
 
-a asserção era satisfeita mesmo com o frete real permanecendo em `R$ 19,90`.
+Dessa forma, o valor `R$ 0,00` presente na mensagem de progresso era interpretado incorretamente como sendo o valor do frete.
 
-Por esse motivo, o resultado automatizado acima deve ser tratado como **registro da execução anterior**, e não como aceite final desse cenário.
+A automação foi refinada para validar especificamente os campos **Subtotal**, **Frete** e **Total**.
 
-## Cenários confirmados como aprovados
-
-### 1. Cobrança de frete abaixo de R$ 200,00
-
-Valida uma compra de:
+Após o refinamento, o Smoke Test foi reexecutado e confirmou corretamente a divergência:
 
 ```text
-Subtotal: R$ 189,90
+
+3 scenarios (1 failed, 2 passed)
+
+15 steps (1 failed, 14 passed)
+
 ```
 
-com resultado esperado de:
+O cenário de frete grátis no limite de R$ 200,00 passou a falhar corretamente com:
 
 ```text
-Frete: R$ 19,90
-Faltante para frete grátis: R$ 10,10
+
+Expected: "R$ 0,00"
+
+Received: "R$ 19,90"
+
 ```
 
-**Resultado:** ✅ PASS
+O falso positivo foi, portanto, eliminado e a automação passou a refletir o comportamento real da aplicação.
 
 ---
 
-### 2. Cálculo de compra abaixo do limite de frete grátis
+# Resultado do Smoke Test
 
-Valida uma compra contendo:
+O Smoke Test foi executado para validar rapidamente os fluxos críticos da aplicação e verificar sua aderência às regras de negócio acordadas.
+
+Resultado da execução:
 
 ```text
-1x Mochila Urbana 20L
+
+3 scenarios (1 failed, 2 passed)
+
+15 steps (1 failed, 14 passed)
+
 ```
 
-com:
+| Cenário | Resultado |
+
+|---|---|
+
+| Carrinho / cálculo básico | ✅ PASS |
+
+| Frete grátis no limite de R$ 200,00 | ❌ FAIL |
+
+| API / cálculo básico | ✅ PASS |
+
+**Resultado:** `2 PASS / 1 FAIL`
+
+## Conclusão do Smoke
+
+❌ **SMOKE REPROVADO**
+
+Os fluxos básicos de carrinho e cálculo da API estão operacionais.
+
+Entretanto, foi identificada uma divergência em uma regra crítica de negócio.
+
+Para uma compra com subtotal exatamente igual a:
 
 ```text
-Subtotal: R$ 100,00
-Frete: R$ 19,90
-Total: R$ 119,90
-```
 
-**Resultado:** ✅ PASS
-
----
-
-## Cenário de UI com falso positivo identificado
-
-### Frete grátis no limite de R$ 200,00
-
-O critério estabelece que uma compra com subtotal exatamente igual a:
-
-```text
 R$ 200,00
+
 ```
 
-deve receber:
+o comportamento esperado é:
 
 ```text
+
 Frete: R$ 0,00
+
 ```
 
-Na execução manual do **TM-006**, porém, foi observado:
+Porém, a aplicação retornou:
 
 ```text
-Subtotal: R$ 200,00
+
 Frete: R$ 19,90
-Mensagem: "Faltam R$ 0,00 para o frete grátis"
+
 ```
 
-**Resultado manual:** ❌ FAIL  
-**Resultado automatizado anterior:** ⚠️ FALSO POSITIVO
+A automação registrou:
 
-O locator/assertion da automação deve ser refinado para validar especificamente o valor apresentado no campo de **frete**, e não uma ocorrência genérica de `R$ 0,00` no conteúdo da página.
+```text
 
-Até que a automação seja corrigida e reexecutada, este cenário **não deve ser contabilizado como PASS automatizado**.
+Expected: "R$ 0,00"
+
+Received: "R$ 19,90"
+
+```
+
+Após o refinamento da validação do campo de frete, o Smoke Test foi reexecutado e confirmou automaticamente a divergência registrada no **BUG-001**, relacionada aos critérios **CA06 / CA08**.
 
 ---
 
-## Cenário reprovado na API
+# Cenários validados
 
-### Frete grátis calculado pela API
+# Cenários confirmados
 
-Foi realizado o cálculo do carrinho utilizando:
+## 1. Cobrança de frete abaixo de R$ 200,00
+
+Massa utilizada:
 
 ```text
-Produto: P005 - Mochila Urbana 20L
-Quantidade: 2
-Subtotal: R$ 200,00
-Cupom: BEMVINDO10
-Desconto: R$ 20,00
+
+1x Tênis Casual Urbano
+
+Subtotal: R$ 189,90
+
 ```
 
-De acordo com os critérios de aceite, o frete deve ser calculado com base no subtotal **antes do desconto**.
-
-Portanto, o esperado era:
+Resultado esperado e obtido:
 
 ```text
+
+Frete: R$ 19,90
+
+Faltante para frete grátis: R$ 10,10
+
+```
+
+**Resultado:** ✅ PASS
+
+---
+
+## 2. Cálculo de compra abaixo do limite
+
+Massa utilizada:
+
+```text
+
+1x Mochila Urbana 20L
+
+```
+
+Resultado esperado e obtido:
+
+```text
+
+Subtotal: R$ 100,00
+
+Frete: R$ 19,90
+
+Total: R$ 119,90
+
+```
+
+**Resultado:** ✅ PASS
+
+---
+
+## 3. Frete grátis no limite de R$ 200,00
+
+Resultado esperado:
+
+```text
+
 Subtotal: R$ 200,00
-Desconto: R$ 20,00
+
 Frete: R$ 0,00
+
+```
+
+Resultado obtido na execução manual:
+
+```text
+
+Subtotal: R$ 200,00
+
+Frete: R$ 19,90
+
+Mensagem: "Faltam R$ 0,00 para o frete grátis"
+
+```
+
+**Resultado manual:** ❌ FAIL  
+
+**Resultado automatizado anterior:** ⚠️ FALSO POSITIVO  
+
+**Resultado automatizado após refinamento:** ❌ FAIL
+
+Após a correção da validação do campo de frete, a automação passou a identificar corretamente:
+
+```text
+
+Expected: "R$ 0,00"
+
+Received: "R$ 19,90"
+
+```
+
+O cenário está confirmado como falha tanto na execução manual quanto na execução automatizada.
+
+---
+
+## 4. Frete grátis calculado pela API
+
+Massa utilizada:
+
+```text
+
+Produto: P005 - Mochila Urbana 20L
+
+Quantidade: 2
+
+Subtotal: R$ 200,00
+
+Cupom: BEMVINDO10
+
+Desconto: R$ 20,00
+
+```
+
+Resultado esperado:
+
+```text
+
+Subtotal: R$ 200,00
+
+Desconto: R$ 20,00
+
+Frete: R$ 0,00
+
 Total: R$ 180,00
+
 ```
 
-Entretanto, a API retornou:
+Resultado observado:
 
 ```text
+
 Frete recebido: R$ 19,90
+
 ```
 
-A validação automatizada registrou:
+Validação automatizada:
 
 ```text
+
 Expected: 0
+
 Received: 19.9
+
 ```
 
 **Resultado:** ❌ FAIL
-
-O comportamento apresenta divergência em relação aos critérios:
-
-- **CA06** — Frete grátis para compras com subtotal a partir de R$ 200,00, inclusive.
-- **CA08** — A regra de frete grátis considera o subtotal antes do desconto do cupom.
-
-A resposta JSON da API foi anexada ao relatório automatizado como evidência.
-
-> **Smoke Test:** como o cenário de R$ 200,00 faz parte do Smoke Test, qualquer execução anterior em que ele tenha sido registrado como PASS também deve ser reavaliada após o refinamento do locator.
 
 ---
 
 # Estratégia da automação
 
-A suíte final foi propositalmente mantida enxuta.
+A suíte foi mantida propositalmente enxuta para priorizar cenários de maior valor e fácil rastreabilidade.
 
 Foram selecionados:
 
-- **2 cenários de interface confirmados como aprovados**, cobrindo regras essenciais do carrinho;
-- **1 cenário de interface com falso positivo identificado**, que deverá ser reexecutado após o refinamento da asserção de frete;
-- **1 cenário de API reprovado**, evidenciando a mesma divergência de regra de negócio no cálculo de frete.
+- cenários de interface para regras essenciais do carrinho;
 
-A intenção foi evitar uma suíte excessivamente extensa para o desafio e priorizar cenários de maior valor e fácil rastreabilidade.
+- cenário de API para reprodução objetiva da divergência de frete;
 
-A comparação entre execução automatizada e execução manual também foi utilizada como mecanismo de revisão da qualidade da própria automação.
+- Smoke Test para validação rápida dos fluxos críticos;
+
+- relatórios automáticos para evidenciar falhas de UI e API.
+
+A execução manual foi utilizada também como mecanismo de revisão da qualidade da própria automação. Essa comparação permitiu identificar e corrigir um falso positivo.
 
 Fluxo utilizado:
 
 ```text
+
 Feature / Gherkin
-        ↓
+
+        ↓
+
 Step Definitions
-        ↓
+
+        ↓
+
 Page Objects
-        ↓
+
+        ↓
+
 Playwright
-        ↓
+
+        ↓
+
 Aplicação / API
-        ↓
+
+        ↓
+
 Relatório HTML + JSON
+
 ```
 
 ---
@@ -364,48 +590,57 @@ Os testes manuais, resultados obtidos e respectivas evidências estão documenta
 
 [Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
+O documento complementa a automação e contempla os demais critérios de aceite.
+
 ---
 
-# Premissas e identificadas
+# Premissas e ambiguidades identificadas
 
-Durante a análise da documentação foram identificados alguns pontos em que a regra principal está definida, mas o comportamento esperado em situações específicas não está totalmente detalhado.
-
-Para evitar interpretações diferentes durante a execução, foram adotadas as seguintes premissas:
+Durante a análise da documentação foram encontrados pontos em que a regra principal está definida, mas o comportamento esperado em situações específicas não está totalmente detalhado.
 
 | Referência | Ambiguidade identificada | Interpretação adotada |
+
 |---|---|---|
-| **CA05 — Apenas um cupom por vez** | A documentação não detalha o comportamento da interface ao tentar aplicar um segundo cupom sem remover o primeiro. | O segundo cupom não deve substituir automaticamente o atual. O cupom aplicado deve ser removido antes da utilização de outro. |
-| **CA10 — Máximo de 5 unidades** | A regra define o limite de 5 unidades, mas não determina como a interface deve reagir à tentativa de adicionar a 6ª unidade. | A quantidade deve permanecer limitada a 5, seja por botão desabilitado, clique ignorado ou mensagem ao usuário. |
-| **CA11 — Arredondamento** | É definido que os valores devem possuir duas casas decimais, porém não é detalhado em qual etapa do cálculo o arredondamento deve ocorrer. | Os valores monetários apresentados e utilizados no resultado final são considerados com duas casas decimais. |
-| **Nome do cliente** | É exigido nome e sobrenome, mas não são detalhadas regras para nomes compostos, hífen, apóstrofo ou múltiplos espaços. | O nome é considerado válido quando possui pelo menos dois termos não vazios. |
-| **E-mail válido** | A documentação exige e-mail válido, mas não determina uma expressão ou padrão específico de validação. | Foi considerada uma validação convencional de formato de e-mail, sem impor restrições adicionais não documentadas. |
-| **CEP** | São aceitos 8 dígitos com ou sem hífen, porém não há detalhamento sobre espaços externos ou caracteres adicionais. | São considerados válidos formatos equivalentes a `01310100` e `01310-100`. |
-| **Quantidade inválida na API** | A documentação apresenta erros relacionados à quantidade, porém não detalha todos os valores de entrada possíveis, como zero, negativo, decimal ou texto. | A quantidade foi interpretada como um número inteiro positivo entre 1 e 5. |
-| **Espaços no cupom** | A documentação determina que espaços no início e no fim sejam ignorados, mas não especifica espaços inseridos no meio do código. | Somente espaços externos são ignorados. Um código como `BEM VINDO10` continua sendo considerado inválido. |
 
-## Observação sobre CA06 e CA08
+| **CA05 — Apenas um cupom por vez** | Não é detalhado o comportamento da interface ao tentar aplicar um segundo cupom sem remover o primeiro. | O segundo cupom não deve substituir automaticamente o atual. |
 
-A divergência encontrada no cálculo de frete da API **não foi considerada uma ambiguidade da documentação**.
+| **CA10 — Máximo de 5 unidades** | O limite é definido, mas a reação visual ao tentar adicionar a 6ª unidade não é especificada. | A quantidade deve permanecer limitada a 5, independentemente de o botão ser desabilitado, o clique ser ignorado ou uma mensagem ser exibida. |
 
-Os critérios CA06 e CA08 estabelecem que:
+| **CA11 — Arredondamento** | Não é especificado em qual etapa do cálculo o arredondamento ocorre. | Valores monetários apresentados e utilizados no resultado final são considerados com duas casas decimais. |
 
-- compras com subtotal a partir de **R$ 200,00**, inclusive, recebem frete grátis;
-- a elegibilidade ao frete grátis deve considerar o subtotal **antes da aplicação do desconto do cupom**.
+| **Nome do cliente** | Não existem regras detalhadas para nomes compostos, hífen, apóstrofo ou múltiplos espaços. | Considerado válido quando possui pelo menos dois termos não vazios. |
 
-Dessa forma, para:
+| **E-mail válido** | Não é definido um padrão específico de validação. | Utilizada validação convencional de formato de e-mail. |
+
+| **CEP** | São aceitos 8 dígitos com ou sem hífen, mas não há detalhamento sobre caracteres adicionais ou espaços externos. | Aceitos formatos equivalentes a `01310100` e `01310-100`. |
+
+| **Quantidade inválida na API** | Não são detalhados todos os valores inválidos possíveis. | Quantidade interpretada como inteiro positivo entre 1 e 5. |
+
+| **Espaços no cupom** | A documentação trata espaços externos, mas não espaços internos. | Apenas espaços no início e no fim são ignorados. |
+
+## CA06 e CA08 não são ambíguos
+
+A divergência de frete encontrada **não foi tratada como ambiguidade**.
+
+Os critérios determinam que:
+
+- subtotal a partir de **R$ 200,00**, inclusive, recebe frete grátis;
+
+- a elegibilidade deve considerar o subtotal **antes do desconto do cupom**.
+
+Logo:
 
 ```text
+
 Subtotal antes do desconto: R$ 200,00
+
 Cupom BEMVINDO10: -R$ 20,00
+
+Frete esperado: R$ 0,00
+
 ```
 
-o frete esperado permanece:
-
-```text
-R$ 0,00
-```
-
-O retorno de `R$ 19,90` pela API foi, portanto, tratado como uma **divergência de regra de negócio** e registrado no Bug Report.
+O retorno de `R$ 19,90` caracteriza divergência de regra de negócio.
 
 ---
 
@@ -413,111 +648,210 @@ O retorno de `R$ 19,90` pela API foi, portanto, tratado como uma **divergência 
 
 ## BUG-001 — Frete grátis não é aplicado quando o subtotal é exatamente R$ 200,00
 
-**Tipo:** Regra de negócio / UI + API  
-**Severidade sugerida:** Alta  
-**Critérios afetados:** CA06 e CA08  
-**Status:** Confirmado
+**Tipo:** Regra de negócio / UI + API  
+
+**Severidade sugerida:** Alta  
+
+**Critérios afetados:** CA06 e CA08  
+
+**Status:** `CONFIRMADO`
 
 ### Resultado esperado
 
-Para subtotal exatamente igual a R$ 200,00:
-
 ```text
-Subtotal: 200.00
-Frete: 0.00
-```
 
-A aplicação do cupom não deve retirar o benefício do frete grátis, pois a elegibilidade deve considerar o subtotal antes do desconto.
+Subtotal: 200.00
+
+Frete: 0.00
+
+```
 
 ### Reprodução na interface
 
-**Massa:**
+Massa:
 
 ```text
+
 Produto: P005 - Mochila Urbana 20L
+
 Quantidade: 2
+
 Subtotal: R$ 200,00
+
 ```
 
-**Resultado observado:**
+Resultado observado:
 
 ```text
+
 Frete: R$ 19,90
+
 Mensagem: "Faltam R$ 0,00 para o frete grátis"
+
 ```
 
 **Resultado:** ❌ FAIL
-
-A evidência da execução manual está documentada no **TM-006** em:
-
-```text
-docs/Testes_Manuais_Exploratorios.md
-```
 
 ### Reprodução na API
 
-**Request:**
+Request:
 
 ```json
+
 {
-  "itens": [
-    {
-      "produtoId": "P005",
-      "quantidade": 2
-    }
-  ],
-  "cupom": "BEMVINDO10"
+
+  "itens": [
+
+    {
+
+      "produtoId": "P005",
+
+      "quantidade": 2
+
+    }
+
+  ],
+
+  "cupom": "BEMVINDO10"
+
 }
+
 ```
 
-**Resultado esperado:**
+Resultado esperado:
 
 ```text
+
 Subtotal: 200.00
+
 Desconto: 20.00
+
 Frete: 0.00
+
 Total: 180.00
+
 ```
 
-**Resultado observado:**
+Resultado observado:
 
 ```text
+
 Frete: 19.90
+
 ```
 
-A validação automatizada registrou:
+Validação automatizada:
 
 ```text
+
 Expected: 0
+
 Received: 19.9
+
 ```
 
 **Resultado:** ❌ FAIL
 
-### Evidências
+---
+
+## BUG-002 — API aceita quantidade acima do máximo permitido
+
+**Tipo:** Regra de negócio / API  
+
+**Severidade sugerida:** Alta  
+
+**Critério afetado:** CA10  
+
+**Status:** `CONFIRMADO`
+
+Request utilizado:
+
+```json
+
+{
+
+  "itens": [
+
+    {
+
+      "produtoId": "P001",
+
+      "quantidade": 6
+
+    }
+
+  ]
+
+}
+
+```
+
+Resultado esperado:
+
+```text
+
+HTTP 422
+
+QUANTIDADE_MAXIMA_EXCEDIDA
+
+```
+
+Resultado observado:
+
+```text
+
+HTTP 200
+
+quantidade: 6
+
+subtotal: 359.40
+
+frete: 0
+
+total: 359.40
+
+```
+
+A API aceitou 6 unidades e realizou normalmente o cálculo do carrinho, contrariando o limite máximo de 5 unidades definido pelo CA10.
+
+**Resultado:** ❌ FAIL
+
+---
+
+## Evidências dos bugs
 
 Disponíveis em:
 
 ```text
-docs/Testes_Manuais_Exploratorios.md
-logs/cucumber-report.html
-logs/cucumber-report.json
-```
 
-A resposta JSON da API também é anexada automaticamente ao cenário que falhou.
+docs/Testes_Manuais_Exploratorios.md
+
+logs/cucumber-report.html
+
+logs/cucumber-report.json
+
+logs/screenshots/
+
+```
 
 ---
 
 # Fora do escopo
 
-Conforme definido no desafio, não fazem parte desta avaliação:
+Conforme definido no desafio:
 
 - login;
+
 - cadastro de clientes;
+
 - pagamento online;
+
 - consulta de pedidos;
+
 - testes de carga;
+
 - testes de stress;
+
 - testes de segurança.
 
 ---
@@ -525,19 +859,33 @@ Conforme definido no desafio, não fazem parte desta avaliação:
 # Entregáveis
 
 - [x] Cenários derivados da documentação
+
 - [x] Testes manuais
+
 - [x] Testes exploratórios
+
 - [x] Registro de premissas e ambiguidades
+
 - [x] Smoke Test
+
 - [x] Automação com Playwright
+
 - [x] Pelo menos 3 cenários automatizados
+
 - [x] Testes de interface
+
 - [x] Teste de API
+
 - [x] Evidências de execução
+
 - [x] Relatório HTML
+
 - [x] Relatório JSON
+
 - [x] Evidência automática de falhas
+
 - [x] Bug Report
+
 - [x] README com instruções de instalação e execução
 
 ---
@@ -545,12 +893,21 @@ Conforme definido no desafio, não fazem parte desta avaliação:
 ## Tecnologias utilizadas
 
 - **Playwright**
+
 - **Cucumber JS**
+
 - **Gherkin**
+
 - **Node.js**
+
 - **JavaScript**
+
 - **Page Object Model**
+
 - **API Testing**
+
 - **Smoke Testing**
+
 - **HTML Report**
+
 - **JSON Report**

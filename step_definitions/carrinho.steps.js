@@ -1,20 +1,16 @@
 const { Given, Then } = require("@cucumber/cucumber");
-
 const { expect } = require("@playwright/test");
 
 const HomePage = require("../pages/HomePage");
-
 const CarrinhoPage = require("../pages/CarrinhoPage");
 
 Given(
   "que adiciono {int} unidade de {string} ao carrinho",
   async function (quantidade, produto) {
     this.homePage = new HomePage(this.page);
-
     this.carrinhoPage = new CarrinhoPage(this.page);
 
     await this.homePage.acessar();
-
     await this.homePage.adicionarProduto(produto, quantidade);
   },
 );
@@ -23,11 +19,9 @@ Given(
   "que adiciono {int} unidades de {string} ao carrinho",
   async function (quantidade, produto) {
     this.homePage = new HomePage(this.page);
-
     this.carrinhoPage = new CarrinhoPage(this.page);
 
     await this.homePage.acessar();
-
     await this.homePage.adicionarProduto(produto, quantidade);
   },
 );
@@ -37,21 +31,21 @@ Given("acesso o carrinho", async function () {
 });
 
 Then("o subtotal deve ser de {string}", async function (valor) {
-  const texto = await this.carrinhoPage.obterTextoPagina();
+  const subtotal = await this.carrinhoPage.obterSubtotal();
 
-  expect(texto).toContain(valor);
+  expect(subtotal).toBe(valor);
 });
 
 Then("o frete deve ser de {string}", async function (valor) {
-  const texto = await this.carrinhoPage.obterTextoPagina();
+  const frete = await this.carrinhoPage.obterFrete();
 
-  expect(texto).toContain(valor);
+  expect(frete).toBe(valor);
 });
 
 Then("o total deve ser de {string}", async function (valor) {
-  const texto = await this.carrinhoPage.obterTextoPagina();
+  const total = await this.carrinhoPage.obterTotal();
 
-  expect(texto).toContain(valor);
+  expect(total).toBe(valor);
 });
 
 Then(
@@ -59,6 +53,8 @@ Then(
   async function (valor) {
     const texto = await this.carrinhoPage.obterTextoPagina();
 
-    expect(texto).toContain(valor);
+    expect(texto).toContain(
+      `Faltam ${valor} para o frete grátis`,
+    );
   },
 );

@@ -4,78 +4,104 @@ class CarrinhoPage {
   }
 
   async obterTextoPagina() {
-    return await this.page.locator("body").innerText();
+    return await this.page
+      .locator("body")
+      .innerText();
   }
 
-  async localizarProduto(nomeProduto) {
-    return this.page
-      .getByText(nomeProduto, {
-        exact: true,
-      })
-      .first();
-  }
+  async obterValorPorCampo(campo) {
+    const texto = await this.obterTextoPagina();
 
-  async localizarContainerProduto(nomeProduto) {
-    const produto = await this.localizarProduto(nomeProduto);
+    const linhas = texto
+      .replace(/\u00A0/g, " ")
+      .split(/\r?\n/)
+      .map((linha) => linha.trim())
+      .filter(Boolean);
 
-    return produto.locator("xpath=ancestor::*[self::div or self::article][1]");
-  }
+    const campoEscapado = campo.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      "\\$&",
+    );
 
-  async tentarAumentarQuantidade(nomeProduto) {
-    const container = await this.localizarContainerProduto(nomeProduto);
+    const regexCampo = new RegExp(
+      `^${campoEscapado}\\b`,
+      "i",
+    );
 
-    const botaoMais = container
-      .getByRole("button", {
-        name: /\+|aumentar|adicionar/i,
-      })
-      .last();
+    const regexValor =
+      /R\$\s*[0-9.]+,[0-9]{2}/;
 
-    /*
-     * Se o sistema desabilitar o botão ao chegar em 5,
-     * isso também representa comportamento válido.
-     */
+    for (let i = 0; i < linhas.length; i++) {
+      const linha = linhas[i];
 
-    if (await botaoMais.isDisabled().catch(() => false)) {
-      return;
-    }
+      // Localiza exatamente o campo:
+      // Subtotal, Frete ou Total
+      if (!regexCampo.test(linha)) {
+        continue;
+      }
 
-    await botaoMais.click();
-  }
+      // Caso:
+      // Subtotal R$ 100,00
+      const valorMesmaLinha =
+        linha.match(regexValor);
 
-  async obterQuantidadeProduto(nomeProduto) {
-    const container = await this.localizarContainerProduto(nomeProduto);
+      if (valorMesmaLinha) {
+        return valorMesmaLinha[0]
+          .replace(/\s+/g, " ")
+          .trim();
+      }
 
-    /*
-     * Primeiro tenta encontrar um input numérico.
-     */
+      // Caso:
+      // Subtotal
+      // R$ 100,00
+      for (
+        let proxima = i + 1;
+        proxima <= i + 3 &&
+        proxima < linhas.length;
+        proxima++
+      ) {
+        const valor =
+          linhas[proxima].match(regexValor);
 
-    const inputQuantidade = container.locator('input[type="number"]');
+        if (valor) {
+          return valor[0]
+            .replace(/\s+/g, " ")
+            .trim();
+        }
 
-    if ((await inputQuantidade.count()) > 0) {
-      const valor = await inputQuantidade.first().inputValue();
-
-      return Number(valor);
-    }
-
-    /*
-     * Caso a quantidade seja apenas texto,
-     * procura pelo número dentro do container.
-     */
-
-    const texto = await container.innerText();
-
-    const numeros = texto.match(/\b\d+\b/g) || [];
-
-    for (const numero of numeros) {
-      const valor = Number(numero);
-
-      if (valor >= 1 && valor <= 6) {
-        return valor;
+        // Se encontrar outro campo antes do valor,
+        // interrompe a busca.
+        if (
+          /^(Subtotal|Frete|Total)\b/i.test(
+            linhas[proxima],
+          )
+        ) {
+          break;
+        }
       }
     }
 
     throw new Error(
-      `Não foi possível identificar a quantidade do produto "${nomeProduto}".`,
+      `Não foi possível localizar o valor do campo "${campo}".\n` +
+      `Conteúdo encontrado no carrinho:\n\n${texto}`,
+    );
+  }
+
+  async obterSubtotal() {
+    return await this.obterValorPorCampo(
+      "Subtotal",
+    );
+  }
+
+  async obterFrete() {
+    return await this.obterValorPorCampo(
+      "Frete",
+    );
+  }
+
+  async obterTotal() {
+    return await this.obterValorPorCampo(
+      "Total",
     );
   }
 }
