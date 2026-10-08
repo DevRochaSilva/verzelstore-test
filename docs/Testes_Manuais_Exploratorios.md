@@ -85,8 +85,16 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Total: R$ 109,90.
 - Cupom indicado como aplicado.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`  
-**Evidência:** `____________________________`
+**Resultado da execução:** `PASS`
+
+**Resultado obtido:**  
+
+O cupom BEMVINDO10 foi aplicado corretamente. Foram apresentados subtotal de R$ 100,00, desconto de R$ 10,00, frete de R$ 19,90 e total de R$ 109,90.
+
+**Evidência:** `evidencias/TM/TM-001_PASS.png`
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -103,7 +111,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - ` bemvindo10 `
 
 **Passos**
-1. Adicionar P005 ao carrinho.
+1. Adicionar 1 Mochila Urbana 20L ao carrinho.
 2. Para cada variação, aplicar o cupom.
 3. Remover o cupom antes de testar a próxima variação.
 
@@ -111,7 +119,23 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Todas as variações são aceitas.
 - O desconto calculado permanece em 10%.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`
+**Resultado da execução:** `PASS`
+
+**Resultado obtido:**  
+
+Aplicado variações  BEMVINDO10, bemvindo10, BemVindo10, BEMVINDO10, bemvindo10, espaços inicio e fim. 
+
+**Teste bônus:**
+
+ Aplicado cupom com caracteres especiais antes e depois
+ 
+ Resultado: cupom recusado.
+
+
+**Evidência:** `evidencias/TM/TM-002_BONUS-FAIL.png`
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -121,7 +145,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Alta
 
 **Passos**
-1. Adicionar P005 ao carrinho.
+1. Adicionar 1 Mochila Urbana 20L ao carrinho.
 2. Informar `CUPOMINVALIDO`.
 3. Aplicar.
 
@@ -130,7 +154,17 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Desconto: R$ 0,00.
 - Total sem desconto.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`
+**Resultado da execução:** `PASS`
+
+**Resultado obtido:**  
+
+O cupom Inávlio foi aplicado e não houve desconto, mantendo o frete de R$ 19,90 e total de R$ 109,90.
+
+**Evidência:** `evidencias/TM/TM-003_PASS.png`
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
+
 
 ---
 
@@ -140,7 +174,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Alta
 
 **Passos**
-1. Adicionar P005 ao carrinho.
+1. Adicionar 1 Mochila Urbana 20L ao carrinho.
 2. Informar `VERAO2026`.
 3. Aplicar.
 
@@ -148,7 +182,16 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Mensagem: `Cupom expirado.`
 - Nenhum desconto aplicado.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`
+**Resultado da execução:** `PASS`
+
+**Resultado obtido:**  
+
+O cupom expirado foi aplicado e não houve desconto, mantendo o frete de R$ 19,90 e total de R$ 109,90.
+
+**Evidência:** `evidencias/TM/TM-004_PASS.png`
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -168,7 +211,18 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Apenas um cupom fica aplicado por vez.
 - Para trocar o cupom, o atual precisa ser removido.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`
+**Resultado da execução:** `PASS`
+
+**Resultado obtido:**  
+
+O cupom BEMVINDO10 foi aplicado, não foi possível adicionar outro cupom, para inserir outro deve-se remover o aplicado. 
+Inserido cupom DESCONTO15 recebe mensagem: "Cupom Inválido"
+
+**Evidência:** `evidencias/TM/TM-005_PASS_CUPOM_VALIDO.png` 
+               `evidencias/TM/TM-005_PASS_CUPOM_INVALIDO.png` 
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -178,7 +232,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Crítica
 
 **Massa**
-- 2 x P005 = R$ 200,00.
+- 2 x Mochila Urbana 20L = R$ 200,00.
 
 **Passos**
 1. Adicionar 2 Mochilas Urbana 20L.
@@ -189,7 +243,22 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Frete: R$ 0,00.
 - Indicador de frete grátis ativo.
 
-**Resultado observado na automação de UI:** `PASS`
+**Resultado observado na automação de UI:** `FAIL`
+
+**Resultado obtido:**  
+
+Adicionado 2x Mochilas Urbana 20L com total de R$200,00, portanto o frete se mnatém fixo R$19,00 com total = R$219,00 com mensagem "Faltam R$ 0,00 para o frete grátis" sem validar o FRETE GRATIS.
+
+**Teste bônus:**
+
+Adicionado mais 1x do produto onde o frete aplicou-se grátis.
+
+
+**Evidência:** `evidencias/TM/TM-006_FAIL.png` 
+               `evidencias/TM/TM-006_BONUS.png` 
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -199,7 +268,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Alta
 
 **Massa**
-- 1 x P003 = R$ 189,90.
+- 1 x Tênis Casual Urbano = R$ 189,90.
 
 **Resultado esperado**
 - Subtotal: R$ 189,90.
@@ -207,6 +276,17 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Informação de que faltam R$ 10,10 para frete grátis.
 
 **Resultado observado na automação de UI:** `PASS`
+
+**Resultado obtido:**  
+
+Adicionado 1x Tênis Casual Urbano com total de R$189,90, frete R$ 19,90, total R$ 209,80, mensagem mostrada "Faltam R$ 10,10 para o frete grátis."
+
+
+**Evidência:** `evidencias/TM/TM-007_PASS.png` 
+               `
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -216,7 +296,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Crítica
 
 **Massa**
-- 2 x P005 = R$ 200,00.
+- 2 x Mochila Urbana 20L = R$ 200,00.
 - Cupom `BEMVINDO10`.
 
 **Resultado esperado**
@@ -226,7 +306,25 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Total: R$ 180,00.
 
 **Resultado de API observado na automação:** `FAIL`  
-**Observação:** em uma execução, a API retornou frete `19.90` em vez de `0`. Registrar como bug caso seja reproduzido manualmente ou via cliente de API.
+
+**Observação:** em uma execução, a API retornou frete `19.90` em vez de `0`. 
+
+**Bug relacionado:** `BUG-001`
+
+**Resultado obtido:**  
+
+Adicionado 2 x Mochila Urbana 20L com valor R$200,00 onde o Frete se manteve R$ 19,90 com desconto de R$ 20,00 e total R$ 199,90.
+
+Cálculo:
+
+R$ 200,00 - R$ 20,00 = R$ 180,00 + R$19,90 = R$ 199,90
+
+
+**Evidência:** `evidencias/TM/TM-008_FAIL.png` 
+               `
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -236,7 +334,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Alta
 
 **Massa**
-- 1 x P005 = R$ 100,00.
+- 1 x Mochila Urbana 20L = R$ 100,00.
 - BEMVINDO10.
 
 **Resultado esperado**
@@ -245,7 +343,20 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Frete: R$ 19,90.
 - Total: R$ 109,90.
 
-**Resultado da execução:** `Pendente de execução manual / preencher`
+
+**Resultado observado na automação de UI:** `PASS`
+
+**Resultado obtido:**  
+
+Adicionado 1x Mochila Urbana 20L com total de R$100,00, deconto com cupom:BEMVINDO10 R$ 10,00, frete R$ 19,90 e total R$ R$ 109,90.
+Mensagem exibida: "Faltam R$ 100,00 para o frete grátis."
+
+
+**Evidência:** `evidencias/TM/TM-009_PASS.png` 
+               `
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -255,7 +366,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Prioridade:** Alta
 
 **Passos**
-1. Adicionar P001.
+1. Adicionar Camiseta Essencial.
 2. Aumentar a quantidade até 5.
 3. Tentar aumentar para 6.
 
@@ -264,6 +375,20 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - A interface não permite uma sexta unidade.
 
 **Resultado observado na automação de UI:** `PASS`
+
+**Resultado obtido:**  
+
+Adicionado 5x Camiseta Essencial, botão desabilita, não permitindo adicionar o mesmo item mais de 5x.
+
+**Teste Bônus**
+
+Feito teste em todos os itens da interface em busca de bug, todos itens aceitam apenas 5 unidade.
+
+**Evidência:** `evidencias/TM/TM-010_PASS.png` 
+               `evidencias/TM/TM-010_BONUS.png`
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 
 ---
 
@@ -291,10 +416,21 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Resultado observado na automação:** `FAIL`  
 **Resultado recebido em uma execução:** HTTP 200.
 
-**Ação sugerida**
-- Reproduzir no Postman/Apidog.
-- Caso confirmado, abrir Bug Report.
+**Resultado obtido:**  
+A API aceitou a quantidade `6` para o produto `P001` e retornou HTTP `200`, realizando normalmente o cálculo do carrinho.
 
+**Resultado esperado:**  
+A API deveria retornar HTTP `422` com o código `QUANTIDADE_MAXIMA_EXCEDIDA`.
+
+**Evidência:** `evidencias/TM/TM-011_FAIL.png`
+
+**Bug relacionado:** `BUG-002`
+
+**Ambiente:** Apidog / API Verzel Store  
+**Data da execução:** 08/10/2026
+
+**Ambiente:** Google Chrome / Windows 11  
+**Data da execução:** 08/10/2026
 ---
 
 ## TM-012 — Arredondamento monetário
@@ -302,11 +438,29 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 **Critério:** CA11  
 **Prioridade:** Alta
 
+**Request**
+```json
+{
+  "itens": [
+    {
+      "produtoId": "P002",
+      "quantidade": 1
+    },
+    {
+      "produtoId": "P004",
+      "quantidade": 2
+    }
+  ],
+  "cupom": "BEMVINDO10"
+}
+```
+
 **Massa**
 - P002 x 1 = 139,90.
 - P004 x 2 = 99,80.
 - Subtotal = 239,70.
 - BEMVINDO10 = 23,97.
+- FRETE = 0,00
 
 **Resultado esperado**
 - Todos os valores com 2 casas decimais.
@@ -314,6 +468,8 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 - Sem discrepâncias de ponto flutuante visíveis ao usuário.
 
 **Resultado observado na automação de API:** `PASS`
+
+**Evidência:** `evidencias/TM/TM-012_PASS.png`
 
 ---
 
