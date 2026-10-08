@@ -91,7 +91,7 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 
 O cupom BEMVINDO10 foi aplicado corretamente. Foram apresentados subtotal de R$ 100,00, desconto de R$ 10,00, frete de R$ 19,90 e total de R$ 109,90.
 
-**Evidência:** `evidencias/TM/TM-001_PASS.png`
+**Evidência:** ![Evidência TM-001_PASS](evidencias/TM/TM-001_PASS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
@@ -573,8 +573,8 @@ Explorar valores próximos ao limite de R$ 200,00.
 
 - subtotal superior a R$ 200,00 recebeu -> `Frete Grátis`
 
-**Evidência:** `evidencias/TE/TE-002_FAIL.png`
-               `evidencias/TE/TE-002_FAIL_2.png`
+**Evidência:** `evidencias/TE/TE-003_FAIL.png`
+               `evidencias/TE/TE-003_FAIL_2.png`
 ---
 
 ## TE-004 — Dados do cliente no pedido
@@ -598,17 +598,29 @@ Explorar validações dos campos de cliente.
 
 **Resultado:** 
 
-- Carrinho consistente. `PASS`
-- Nenhum valor negativo. `PASS`
-- Nenhuma quantidade acima de 5. `PASS`
-- Outra aba inicia com carrinho próprio, conforme documentação.`PASS`
+Aceito:
 
-**Teste Stress** 
+- nome e sobrenome; 
+- e-mail válido; 
+- CEP com hífen;
+- CEP sem hífen;
 
-Executada toda exploração proposta onde tudo retorna: status HTTP 200
+**Evidência:** evidencias/TE/TE-004_PASS_1.png
 
-**Evidência:** `evidencias/TE/TE-001_PASS.png`
+Rejeitado:
 
+- nome com apenas uma palavra;
+- e-mail sem `@`; 
+- CEP com menos/mais de 8 dígitos. 
+ 
+**Evidência:** evidencias/TE/TE-004_PASS_2.png
+
+**Ajustes Sugeridos:** 
+
+Adicionar máscara ao campo CEP 
+Tratar campo nome completo, está aceitando número.
+Tratar campo e-mail está aceitando ".com.com.com" e número. Ex: teste@gmail.1234
+Campo CEP precisa validar o CEP, pois está passando cadastro com 00000-000. 
 ---
 
 ## TE-005 — Resiliência visual básica
@@ -627,7 +639,13 @@ Explorar a interface em condições comuns sem executar testes de carga, stress 
 - Fluxo principal permanece utilizável.
 - Nenhuma informação importante fica inacessível.
 
-**Resultado:** `Preencher após execução`
+**Resultado:** 
+
+- redimensionar a janela => Responsividade dentro do esperado.
+- rolar páginas => sem quebras.
+- voltar/avançar no navegador => Mantido dados ao voltar e avançar sem erro.
+- recarregar carrinho => Refresh sem erro ou alteração de dados do carrinho
+- navegação rápida entre catálogo e carrinho => Nenhum erro encontrado.
 
 ---
 
@@ -649,9 +667,9 @@ Explorar a interface em condições comuns sem executar testes de carga, stress 
 
 ---
 
-# 8. Bugs candidatos identificados na automação
+# 8. Bugs identificados
 
-## BUG-CAND-001 — API cobra frete quando subtotal é exatamente R$ 200,00
+## BUG-001 — API cobra frete quando subtotal é exatamente R$ 200,00
 
 **Origem:** CA06 / CA08  
 **Severidade sugerida:** Alta
@@ -660,7 +678,6 @@ Explorar a interface em condições comuns sem executar testes de carga, stress 
 ```text
 subtotal = 200.00
 frete = 0.00
-```
 
 **Observado em execução automatizada**
 ```text
@@ -669,7 +686,8 @@ frete = 19.90
 ```
 
 **Status**
-`Confirmar manualmente/API antes de registrar como bug definitivo.`
+
+`CONFIRMADO`
 
 ---
 
@@ -687,10 +705,22 @@ QUANTIDADE_MAXIMA_EXCEDIDA
 **Observado em execução automatizada**
 ```text
 HTTP 200
+quantidade = 6
 ```
+**Validação:**
+Comportamento reproduzido manualmente no Apidog. A API aceitou 6 unidades do produto P001, retornou HTTP 200 e realizou normalmente o cálculo do carrinho, contrariando o limite máximo de 5 unidades definido no CA10.
+
+```text
+quantidade: 6
+subtotal: 359.40
+frete: 0
+total: 359.40
+HTTP: 200
+
 
 **Status**
-`Confirmar no Postman/Apidog antes de registrar como bug definitivo.`
+
+`CONFIRMADO`
 
 ---
 

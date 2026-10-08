@@ -2,8 +2,9 @@ node_modules/
 
 .env
 .env.*
-*.png
-*.html
+logs/screenshots/*.png
+logs/*.html
+logs/*.json 
 
 .vscode/
 .idea/
