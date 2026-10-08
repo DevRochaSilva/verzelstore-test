@@ -182,36 +182,28 @@ Isso permite visualizar os valores efetivamente retornados pelo backend sem depe
 
 # Resultado da automação
 
-A suíte foi refinada para demonstrar os principais cenários do desafio de forma objetiva e com baixo acoplamento.
-
-Resultado final:
+A primeira execução automatizada registrou:
 
 ```text
 4 scenarios (1 failed, 3 passed)
 21 steps (1 failed, 1 skipped, 19 passed)
 ```
 
-## Cenários aprovados
+Durante o confronto entre a automação e a execução manual do **TM-006**, foi identificado que o cenário de frete grátis exatamente em R$ 200,00 havia gerado um **falso positivo na automação de UI**.
 
-### 1. Frete grátis no limite de R$ 200,00
-
-Valida que uma compra com subtotal exatamente igual a:
+O step utilizado validava apenas a existência do texto `R$ 0,00` na página. Como a interface apresentava a mensagem:
 
 ```text
-R$ 200,00
+Faltam R$ 0,00 para o frete grátis
 ```
 
-recebe:
+a asserção era satisfeita mesmo com o frete real permanecendo em `R$ 19,90`.
 
-```text
-Frete: R$ 0,00
-```
+Por esse motivo, o resultado automatizado acima deve ser tratado como **registro da execução anterior**, e não como aceite final desse cenário.
 
-**Resultado:** ✅ PASS
+## Cenários confirmados como aprovados
 
----
-
-### 2. Cobrança de frete abaixo de R$ 200,00
+### 1. Cobrança de frete abaixo de R$ 200,00
 
 Valida uma compra de:
 
@@ -230,7 +222,7 @@ Faltante para frete grátis: R$ 10,10
 
 ---
 
-### 3. Cálculo de compra abaixo do limite de frete grátis
+### 2. Cálculo de compra abaixo do limite de frete grátis
 
 Valida uma compra contendo:
 
@@ -250,7 +242,40 @@ Total: R$ 119,90
 
 ---
 
-## Cenário reprovado
+## Cenário de UI com falso positivo identificado
+
+### Frete grátis no limite de R$ 200,00
+
+O critério estabelece que uma compra com subtotal exatamente igual a:
+
+```text
+R$ 200,00
+```
+
+deve receber:
+
+```text
+Frete: R$ 0,00
+```
+
+Na execução manual do **TM-006**, porém, foi observado:
+
+```text
+Subtotal: R$ 200,00
+Frete: R$ 19,90
+Mensagem: "Faltam R$ 0,00 para o frete grátis"
+```
+
+**Resultado manual:** ❌ FAIL  
+**Resultado automatizado anterior:** ⚠️ FALSO POSITIVO
+
+O locator/assertion da automação deve ser refinado para validar especificamente o valor apresentado no campo de **frete**, e não uma ocorrência genérica de `R$ 0,00` no conteúdo da página.
+
+Até que a automação seja corrigida e reexecutada, este cenário **não deve ser contabilizado como PASS automatizado**.
+
+---
+
+## Cenário reprovado na API
 
 ### Frete grátis calculado pela API
 
@@ -297,6 +322,8 @@ O comportamento apresenta divergência em relação aos critérios:
 
 A resposta JSON da API foi anexada ao relatório automatizado como evidência.
 
+> **Smoke Test:** como o cenário de R$ 200,00 faz parte do Smoke Test, qualquer execução anterior em que ele tenha sido registrado como PASS também deve ser reavaliada após o refinamento do locator.
+
 ---
 
 # Estratégia da automação
@@ -305,10 +332,13 @@ A suíte final foi propositalmente mantida enxuta.
 
 Foram selecionados:
 
-- **3 cenários de interface aprovados**, cobrindo regras essenciais do carrinho;
-- **1 cenário de API reprovado**, evidenciando uma divergência real entre a documentação e o comportamento observado.
+- **2 cenários de interface confirmados como aprovados**, cobrindo regras essenciais do carrinho;
+- **1 cenário de interface com falso positivo identificado**, que deverá ser reexecutado após o refinamento da asserção de frete;
+- **1 cenário de API reprovado**, evidenciando a mesma divergência de regra de negócio no cálculo de frete.
 
 A intenção foi evitar uma suíte excessivamente extensa para o desafio e priorizar cenários de maior valor e fácil rastreabilidade.
+
+A comparação entre execução automatizada e execução manual também foi utilizada como mecanismo de revisão da qualidade da própria automação.
 
 Fluxo utilizado:
 
@@ -381,19 +411,52 @@ O retorno de `R$ 19,90` pela API foi, portanto, tratado como uma **divergência 
 
 # Bug Report
 
-## BUG-001 — API cobra frete para subtotal exatamente igual a R$ 200,00
+## BUG-001 — Frete grátis não é aplicado quando o subtotal é exatamente R$ 200,00
 
-**Tipo:** Regra de negócio / API  
+**Tipo:** Regra de negócio / UI + API  
 **Severidade sugerida:** Alta  
-**Critérios afetados:** CA06 e CA08
+**Critérios afetados:** CA06 e CA08  
+**Status:** Confirmado
 
-### Pré-condições
+### Resultado esperado
 
-- API disponível.
-- Produto `P005` disponível.
-- Cupom `BEMVINDO10` válido.
+Para subtotal exatamente igual a R$ 200,00:
 
-### Request
+```text
+Subtotal: 200.00
+Frete: 0.00
+```
+
+A aplicação do cupom não deve retirar o benefício do frete grátis, pois a elegibilidade deve considerar o subtotal antes do desconto.
+
+### Reprodução na interface
+
+**Massa:**
+
+```text
+Produto: P005 - Mochila Urbana 20L
+Quantidade: 2
+Subtotal: R$ 200,00
+```
+
+**Resultado observado:**
+
+```text
+Frete: R$ 19,90
+Mensagem: "Faltam R$ 0,00 para o frete grátis"
+```
+
+**Resultado:** ❌ FAIL
+
+A evidência da execução manual está documentada no **TM-006** em:
+
+```text
+docs/Testes_Manuais_Exploratorios.md
+```
+
+### Reprodução na API
+
+**Request:**
 
 ```json
 {
@@ -407,7 +470,7 @@ O retorno de `R$ 19,90` pela API foi, portanto, tratado como uma **divergência 
 }
 ```
 
-### Resultado esperado
+**Resultado esperado:**
 
 ```text
 Subtotal: 200.00
@@ -416,21 +479,27 @@ Frete: 0.00
 Total: 180.00
 ```
 
-### Resultado atual
-
-A API retorna:
+**Resultado observado:**
 
 ```text
 Frete: 19.90
 ```
 
-mesmo com subtotal de `200.00`.
+A validação automatizada registrou:
+
+```text
+Expected: 0
+Received: 19.9
+```
+
+**Resultado:** ❌ FAIL
 
 ### Evidências
 
 Disponíveis em:
 
 ```text
+docs/Testes_Manuais_Exploratorios.md
 logs/cucumber-report.html
 logs/cucumber-report.json
 ```
