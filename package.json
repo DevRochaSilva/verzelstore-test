@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "cucumber-js",
-    "test:pass": "cucumber-js --tags '@pass'",
-    "test:bug": "cucumber-js --tags '@bug'",
+    "test:smoke": "cucumber-js --profile smoke",
+    "test:ui": "cucumber-js --profile ui",
+    "test:api": "cucumber-js --profile api",
+    "test:all": "cucumber-js --profile all",
     "report": "start logs\\cucumber-report.html"
   }
 }

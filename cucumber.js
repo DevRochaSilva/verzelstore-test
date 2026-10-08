@@ -1,23 +1,40 @@
+const common = {
+  paths: ["features/**/*.feature"],
+
+  require: ["step_definitions/**/*.js", "support/**/*.js"],
+
+  format: [
+    "progress-bar",
+    "summary",
+    "json:logs/cucumber-report.json",
+    "html:logs/cucumber-report.html",
+  ],
+
+  publishQuiet: true,
+};
+
 module.exports = {
-    default: {
-        paths: [
-            'features/**/*.feature'
-        ],
+  default: {
+    ...common,
+    tags: "@desafio",
+  },
 
-        require: [
-            'step_definitions/**/*.js',
-            'support/**/*.js'
-        ],
+  smoke: {
+    ...common,
+    tags: "@smoke",
+  },
 
-        format: [
-            'progress-bar',
-            'summary',
+  ui: {
+    ...common,
+    tags: "@desafio and @ui",
+  },
 
-            'json:logs/cucumber-report.json',
+  api: {
+    ...common,
+    tags: "@desafio and @api",
+  },
 
-            'html:logs/cucumber-report.html'
-        ],
-
-        publishQuiet: true
-    }
+  all: {
+    ...common,
+  },
 };

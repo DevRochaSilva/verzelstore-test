@@ -1,5 +1,6 @@
 #language: pt
 
+@desafio @api @bug
 Funcionalidade: Regra de frete grátis pela API
 
   @api @bug

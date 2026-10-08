@@ -1,5 +1,6 @@
 #language: pt
 
+@desafio @ui
 Funcionalidade: Regras do carrinho da Verzel Store
 
   Como cliente da Verzel Store,

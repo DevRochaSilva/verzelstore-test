@@ -108,6 +108,12 @@ npm run test:ui
 ```bash
 npm run test:api
 ```
+### Executar Smoke Test
+
+```bash
+npm run test:smoke
+```
+
 
 ---
 
