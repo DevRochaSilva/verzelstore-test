@@ -36,7 +36,8 @@ A automação foi implementada utilizando **Playwright + Cucumber**, com cenári
 VerzelStore-Test/
 ├── features/
 │   ├── regras_carrinho.feature
-│   └── bug_frete_api.feature
+│   ├── bug_frete_api.feature
+│   └── smoke.feature
 │
 ├── step_definitions/
 │   ├── carrinho.steps.js
@@ -108,12 +109,12 @@ npm run test:ui
 ```bash
 npm run test:api
 ```
+
 ### Executar Smoke Test
 
 ```bash
 npm run test:smoke
 ```
-
 
 ---
 
@@ -339,6 +340,49 @@ O documento complementa a automação e contempla os demais critérios de aceite
 
 ---
 
+# Premissas e identificadas
+
+Durante a análise da documentação foram identificados alguns pontos em que a regra principal está definida, mas o comportamento esperado em situações específicas não está totalmente detalhado.
+
+Para evitar interpretações diferentes durante a execução, foram adotadas as seguintes premissas:
+
+| Referência | Ambiguidade identificada | Interpretação adotada |
+|---|---|---|
+| **CA05 — Apenas um cupom por vez** | A documentação não detalha o comportamento da interface ao tentar aplicar um segundo cupom sem remover o primeiro. | O segundo cupom não deve substituir automaticamente o atual. O cupom aplicado deve ser removido antes da utilização de outro. |
+| **CA10 — Máximo de 5 unidades** | A regra define o limite de 5 unidades, mas não determina como a interface deve reagir à tentativa de adicionar a 6ª unidade. | A quantidade deve permanecer limitada a 5, seja por botão desabilitado, clique ignorado ou mensagem ao usuário. |
+| **CA11 — Arredondamento** | É definido que os valores devem possuir duas casas decimais, porém não é detalhado em qual etapa do cálculo o arredondamento deve ocorrer. | Os valores monetários apresentados e utilizados no resultado final são considerados com duas casas decimais. |
+| **Nome do cliente** | É exigido nome e sobrenome, mas não são detalhadas regras para nomes compostos, hífen, apóstrofo ou múltiplos espaços. | O nome é considerado válido quando possui pelo menos dois termos não vazios. |
+| **E-mail válido** | A documentação exige e-mail válido, mas não determina uma expressão ou padrão específico de validação. | Foi considerada uma validação convencional de formato de e-mail, sem impor restrições adicionais não documentadas. |
+| **CEP** | São aceitos 8 dígitos com ou sem hífen, porém não há detalhamento sobre espaços externos ou caracteres adicionais. | São considerados válidos formatos equivalentes a `01310100` e `01310-100`. |
+| **Quantidade inválida na API** | A documentação apresenta erros relacionados à quantidade, porém não detalha todos os valores de entrada possíveis, como zero, negativo, decimal ou texto. | A quantidade foi interpretada como um número inteiro positivo entre 1 e 5. |
+| **Espaços no cupom** | A documentação determina que espaços no início e no fim sejam ignorados, mas não especifica espaços inseridos no meio do código. | Somente espaços externos são ignorados. Um código como `BEM VINDO10` continua sendo considerado inválido. |
+
+## Observação sobre CA06 e CA08
+
+A divergência encontrada no cálculo de frete da API **não foi considerada uma ambiguidade da documentação**.
+
+Os critérios CA06 e CA08 estabelecem que:
+
+- compras com subtotal a partir de **R$ 200,00**, inclusive, recebem frete grátis;
+- a elegibilidade ao frete grátis deve considerar o subtotal **antes da aplicação do desconto do cupom**.
+
+Dessa forma, para:
+
+```text
+Subtotal antes do desconto: R$ 200,00
+Cupom BEMVINDO10: -R$ 20,00
+```
+
+o frete esperado permanece:
+
+```text
+R$ 0,00
+```
+
+O retorno de `R$ 19,90` pela API foi, portanto, tratado como uma **divergência de regra de negócio** e registrado no Bug Report.
+
+---
+
 # Bug Report
 
 ## BUG-001 — API cobra frete para subtotal exatamente igual a R$ 200,00
@@ -418,6 +462,8 @@ Conforme definido no desafio, não fazem parte desta avaliação:
 - [x] Cenários derivados da documentação
 - [x] Testes manuais
 - [x] Testes exploratórios
+- [x] Registro de premissas e ambiguidades
+- [x] Smoke Test
 - [x] Automação com Playwright
 - [x] Pelo menos 3 cenários automatizados
 - [x] Testes de interface
@@ -440,5 +486,6 @@ Conforme definido no desafio, não fazem parte desta avaliação:
 - **JavaScript**
 - **Page Object Model**
 - **API Testing**
+- **Smoke Testing**
 - **HTML Report**
 - **JSON Report**
