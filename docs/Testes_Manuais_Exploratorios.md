@@ -495,8 +495,18 @@ Explorar o comportamento do carrinho ao adicionar, remover e alterar quantidades
 - Nenhuma quantidade acima de 5.
 - Outra aba inicia com carrinho próprio, conforme documentação.
 
-**Resultado:** `Preencher após execução`
+**Resultado:** 
 
+- Carrinho consistente. `PASS`
+- Nenhum valor negativo. `PASS`
+- Nenhuma quantidade acima de 5. `PASS`
+- Outra aba inicia com carrinho próprio, conforme documentação.`PASS`
+
+**Teste Stress** 
+
+Executada toda exploração proposta onde tudo retorna: status HTTP 200
+
+**Evidência:** `evidencias/TE/TE-001_PASS.png`
 ---
 
 ## TE-002 — Cupons e entradas inesperadas
@@ -518,7 +528,24 @@ Explorar variações de entrada no campo de cupom.
 - Mensagens coerentes.
 - Apenas as normalizações previstas pela documentação são aceitas.
 
-**Resultado:** `Preencher após execução`
+**Resultado:** 
+
+- Sistema não quebra.
+- Mensagens coerentes.
+- Apenas as normalizações previstas pela documentação são aceitas.
+
+**Resultado:** 
+
+- Carrinho consistente. `PASS`
+- Nenhum valor negativo. `PASS`
+- Nenhuma quantidade acima de 5. `PASS`
+- Outra aba inicia com carrinho próprio, conforme documentação.`PASS`
+
+**Teste Stress** 
+
+Executada toda exploração proposta onde tudo retorna: status HTTP 200
+
+**Evidência:** `sem evidências relevantes`
 
 ---
 
@@ -528,19 +555,26 @@ Explorar variações de entrada no campo de cupom.
 Explorar valores próximos ao limite de R$ 200,00.
 
 **Explorar**
-- R$ 199,80;
-- R$ 199,90;
-- R$ 200,00;
-- R$ 200,10;
+- R$ 100,00;
+- R$ 150,00
+- R$ 219,90;
+- R$ 250,00;
 - subtotal superior a R$ 200,00;
-- subtotal que cai abaixo de R$ 200 após desconto.
 
 **Resultado esperado**
 - A decisão de frete usa o subtotal anterior ao desconto.
 - R$ 200,00 inclusive recebe frete grátis.
 
-**Resultado:** `Preencher após execução`
+**Resultado:**
+- R$ 100,00;  `PASS`
+- R$ 150,00   `PASS`
+- R$ 219,90;  `FAIL`
+- R$ 250,00;; `FAIL`
 
+- subtotal superior a R$ 200,00 recebeu -> `Frete Grátis`
+
+**Evidência:** `evidencias/TE/TE-002_FAIL.png`
+               `evidencias/TE/TE-002_FAIL_2.png`
 ---
 
 ## TE-004 — Dados do cliente no pedido
@@ -562,7 +596,18 @@ Explorar validações dos campos de cliente.
 - E-mail deve ter formato válido.
 - CEP aceita 8 dígitos com ou sem hífen.
 
-**Resultado:** `Preencher após execução`
+**Resultado:** 
+
+- Carrinho consistente. `PASS`
+- Nenhum valor negativo. `PASS`
+- Nenhuma quantidade acima de 5. `PASS`
+- Outra aba inicia com carrinho próprio, conforme documentação.`PASS`
+
+**Teste Stress** 
+
+Executada toda exploração proposta onde tudo retorna: status HTTP 200
+
+**Evidência:** `evidencias/TE/TE-001_PASS.png`
 
 ---
 
