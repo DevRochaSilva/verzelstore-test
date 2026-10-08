@@ -57,7 +57,6 @@ Validar manualmente os principais comportamentos descritos na história de usuá
 |---|---|---|
 | BEMVINDO10 | Válido | 10% de desconto |
 | VERAO2026 | Expirado | Deve informar "Cupom expirado." |
-
 ---
 
 # 5. Casos de teste manuais
@@ -95,7 +94,6 @@ O cupom BEMVINDO10 foi aplicado corretamente. Foram apresentados subtotal de R$ 
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-002 — Validar normalização do código do cupom
@@ -132,11 +130,10 @@ Aplicado variações  BEMVINDO10, bemvindo10, BemVindo10, BEMVINDO10, bemvindo10
  Resultado: cupom recusado.
 
 
-**Evidência:** `evidencias/TM/TM-002_BONUS-FAIL.png`
+**Evidência:** ![Evidência TM-002_BONUS-FAIL](evidencias/TM/TM-002_BONUS-FAIL.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-003 — Cupom inexistente
@@ -160,12 +157,10 @@ Aplicado variações  BEMVINDO10, bemvindo10, BemVindo10, BEMVINDO10, bemvindo10
 
 O cupom Inávlio foi aplicado e não houve desconto, mantendo o frete de R$ 19,90 e total de R$ 109,90.
 
-**Evidência:** `evidencias/TM/TM-003_PASS.png`
+**Evidência:** ![Evidência TM-003_PASS](evidencias/TM/TM-003_PASS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
-
 ---
 
 ## TM-004 — Cupom expirado
@@ -188,11 +183,10 @@ O cupom Inávlio foi aplicado e não houve desconto, mantendo o frete de R$ 19,9
 
 O cupom expirado foi aplicado e não houve desconto, mantendo o frete de R$ 19,90 e total de R$ 109,90.
 
-**Evidência:** `evidencias/TM/TM-004_PASS.png`
+**Evidência:** [Evidência TM-004_PASS](evidencias/TM/TM-004_PASS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-005 — Apenas um cupom por vez
@@ -218,12 +212,12 @@ O cupom expirado foi aplicado e não houve desconto, mantendo o frete de R$ 19,9
 O cupom BEMVINDO10 foi aplicado, não foi possível adicionar outro cupom, para inserir outro deve-se remover o aplicado. 
 Inserido cupom DESCONTO15 recebe mensagem: "Cupom Inválido"
 
-**Evidência:** `evidencias/TM/TM-005_PASS_CUPOM_VALIDO.png` 
-               `evidencias/TM/TM-005_PASS_CUPOM_INVALIDO.png` 
+**Evidência:** ![Evidência TM-005_PASS_CUPOM_VALIDO](evidencias/TM/TM-005_PASS_CUPOM_VALIDO.png)&#x20;
+
+               ![Evidência TM-005_PASS_CUPOM_INVALIDO](evidencias/TM/TM-005_PASS_CUPOM_INVALIDO.png)&#x20; 
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-006 — Frete grátis exatamente em R$ 200,00
@@ -254,12 +248,12 @@ Adicionado 2x Mochilas Urbana 20L com total de R$200,00, portanto o frete se mna
 Adicionado mais 1x do produto onde o frete aplicou-se grátis.
 
 
-**Evidência:** `evidencias/TM/TM-006_FAIL.png` 
-               `evidencias/TM/TM-006_BONUS.png` 
+**Evidência:** ![Evidência TM-006_FAIL](evidencias/TM/TM-006_FAIL.png)&#x20;
+
+               ![Evidência TM-006_BONUS](evidencias/TM/TM-006_BONUS.png)&#x20;
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-007 — Frete abaixo do limite
@@ -282,12 +276,10 @@ Adicionado mais 1x do produto onde o frete aplicou-se grátis.
 Adicionado 1x Tênis Casual Urbano com total de R$189,90, frete R$ 19,90, total R$ 209,80, mensagem mostrada "Faltam R$ 10,10 para o frete grátis."
 
 
-**Evidência:** `evidencias/TM/TM-007_PASS.png` 
-               `
-
+**Evidência:** ![Evidência TM-007_PASS](evidencias/TM/TM-007_PASS.png)&#x20;
+               
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-008 — Frete grátis calculado antes do desconto
@@ -320,12 +312,11 @@ Cálculo:
 R$ 200,00 - R$ 20,00 = R$ 180,00 + R$19,90 = R$ 199,90
 
 
-**Evidência:** `evidencias/TM/TM-008_FAIL.png` 
-               `
+**Evidência:** ![Evidência TM-008_FAIL](evidencias/TM/TM-008_FAIL.png)&#x20;
+               
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-009 — Desconto não incide sobre frete
@@ -352,12 +343,10 @@ Adicionado 1x Mochila Urbana 20L com total de R$100,00, deconto com cupom:BEMVIN
 Mensagem exibida: "Faltam R$ 100,00 para o frete grátis."
 
 
-**Evidência:** `evidencias/TM/TM-009_PASS.png` 
-               `
+**Evidência:** ![Evidência TM-009_PASS](evidencias/TM/TM-009_PASS.png)&#x20;               `
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-010 — Limite máximo de 5 unidades na interface
@@ -384,12 +373,12 @@ Adicionado 5x Camiseta Essencial, botão desabilita, não permitindo adicionar o
 
 Feito teste em todos os itens da interface em busca de bug, todos itens aceitam apenas 5 unidade.
 
-**Evidência:** `evidencias/TM/TM-010_PASS.png` 
-               `evidencias/TM/TM-010_BONUS.png`
+**Evidência:** ![Evidência TM-010_PASS](evidencias/TM/TM-010_PASS.png)&#x20;
+
+               ![Evidência TM-010_BONUS](evidencias/TM/TM-010_BONUS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
-
 ---
 
 ## TM-011 — Limite máximo de 5 unidades na API
@@ -422,7 +411,7 @@ A API aceitou a quantidade `6` para o produto `P001` e retornou HTTP `200`, real
 **Resultado esperado:**  
 A API deveria retornar HTTP `422` com o código `QUANTIDADE_MAXIMA_EXCEDIDA`.
 
-**Evidência:** `evidencias/TM/TM-011_FAIL.png`
+**Evidência:** ![Evidência TM-011_FAIL](evidencias/TM/TM-011_FAIL.png)
 
 **Bug relacionado:** `BUG-002`
 
@@ -469,8 +458,7 @@ A API deveria retornar HTTP `422` com o código `QUANTIDADE_MAXIMA_EXCEDIDA`.
 
 **Resultado observado na automação de API:** `PASS`
 
-**Evidência:** `evidencias/TM/TM-012_PASS.png`
-
+**Evidência:** ![Evidência TM-012_PASS](evidencias/TM/TM-012_PASS.png)
 ---
 
 # 6. Testes exploratórios
@@ -506,7 +494,7 @@ Explorar o comportamento do carrinho ao adicionar, remover e alterar quantidades
 
 Executada toda exploração proposta onde tudo retorna: status HTTP 200
 
-**Evidência:** `evidencias/TE/TE-001_PASS.png`
+**Evidência:** ![Evidência TE-001_PASS](evidencias/TE/TE-001_PASS.png)
 ---
 
 ## TE-002 — Cupons e entradas inesperadas
@@ -573,8 +561,9 @@ Explorar valores próximos ao limite de R$ 200,00.
 
 - subtotal superior a R$ 200,00 recebeu -> `Frete Grátis`
 
-**Evidência:** `evidencias/TE/TE-003_FAIL.png`
-               `evidencias/TE/TE-003_FAIL_2.png`
+**Evidência:** ![Evidência TE-003_FAIL](evidencias/TE/TE-003_FAIL.png)
+
+               ![Evidência TE-003_FAIL_2](evidencias/TE/TE-003_FAIL_2.png)
 ---
 
 ## TE-004 — Dados do cliente no pedido
@@ -605,7 +594,7 @@ Aceito:
 - CEP com hífen;
 - CEP sem hífen;
 
-**Evidência:** evidencias/TE/TE-004_PASS_1.png
+**Evidência:** ![Evidência TE-004_PASS_1](evidencias/TE/TE-004_PASS_1.png)
 
 Rejeitado:
 
@@ -613,7 +602,7 @@ Rejeitado:
 - e-mail sem `@`; 
 - CEP com menos/mais de 8 dígitos. 
  
-**Evidência:** evidencias/TE/TE-004_PASS_2.png
+**Evidência:** ![Evidência TE-004_PASS_2](evidencias/TE/TE-004_PASS_2.png)
 
 **Ajustes Sugeridos:** 
 
