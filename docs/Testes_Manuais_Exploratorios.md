@@ -183,7 +183,7 @@ O cupom Inávlio foi aplicado e não houve desconto, mantendo o frete de R$ 19,9
 
 O cupom expirado foi aplicado e não houve desconto, mantendo o frete de R$ 19,90 e total de R$ 109,90.
 
-**Evidência:** [Evidência TM-004_PASS](evidencias/TM/TM-004_PASS.png)
+**Evidência:** ![Evidência TM-004_PASS](evidencias/TM/TM-004_PASS.png)
 
 **Ambiente:** Google Chrome / Windows 11  
 **Data da execução:** 08/10/2026
