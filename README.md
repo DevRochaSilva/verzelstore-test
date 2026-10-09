@@ -590,7 +590,7 @@ Relatório HTML + JSON
 
 Os testes manuais, resultados obtidos e respectivas evidências estão documentados em:
 
-[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
+[testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 O documento complementa a automação e contempla os demais critérios de aceite.
 
