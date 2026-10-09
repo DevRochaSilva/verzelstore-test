@@ -250,7 +250,7 @@ Quando um cenário marcado com `@api` falha, a resposta JSON retornada pela API 
 
 As evidências dos testes manuais e exploratórios estão documentadas em:
 
-[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
+[testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 ---
 
@@ -387,8 +387,6 @@ Após o refinamento da validação do campo de frete, o Smoke Test foi reexecuta
 ---
 
 # Cenários validados
-
-# Cenários confirmados
 
 ## 1. Cobrança de frete abaixo de R$ 200,00
 
