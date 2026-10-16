@@ -240,7 +240,7 @@ Quando um cenário marcado com `@api` falha, a resposta JSON retornada pela API 
 
 As evidências dos testes manuais e exploratórios estão documentadas em:
 
-[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
+[testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 ---
 
@@ -495,7 +495,7 @@ Relatório HTML + JSON
 
 Os testes manuais, resultados obtidos e respectivas evidências estão documentados em:
 
-[Ver testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
+[testes manuais e evidências](docs/Testes_Manuais_Exploratorios.md)
 
 O documento complementa a automação e contempla os demais critérios de aceite.
 
