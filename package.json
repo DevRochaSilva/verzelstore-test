@@ -10,5 +10,10 @@
     "test:api": "cucumber-js --profile api",
     "test:all": "cucumber-js --profile all",
     "report": "start logs\\cucumber-report.html"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "13.3.0",
+    "@playwright/test": "1.64.1",
+    "playwright": "1.64.1"
   }
 }
