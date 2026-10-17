@@ -557,13 +557,13 @@ Explorar valores próximos ao limite de R$ 200,00.
 - R$ 100,00;  `PASS`
 - R$ 150,00   `PASS`
 - R$ 219,90;  `FAIL`
-- R$ 250,00;; `FAIL`
+- R$ 250,00;; `PASS`
 
 - subtotal superior a R$ 200,00 recebeu -> `Frete Grátis`
 
 **Evidência:** ![Evidência TE-003_FAIL](evidencias/TE/TE-003_FAIL.png)
 
-               ![Evidência TE-003_FAIL_2](evidencias/TE/TE-003_FAIL_2.png)
+               ![Evidência TE-003_PASS_2](evidencias/TE/TE-003_PASS_2.png)
 ---
 
 ## TE-004 — Dados do cliente no pedido

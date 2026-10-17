@@ -28,6 +28,8 @@ Given(
 
 Given("acesso o carrinho", async function () {
   await this.homePage.acessarCarrinho();
+
+  await this.carrinhoPage.aguardarResumoCarrinho();
 });
 
 Then("o subtotal deve ser de {string}", async function (valor) {
@@ -53,8 +55,6 @@ Then(
   async function (valor) {
     const texto = await this.carrinhoPage.obterTextoPagina();
 
-    expect(texto).toContain(
-      `Faltam ${valor} para o frete grátis`,
-    );
+    expect(texto).toContain(`Faltam ${valor} para o frete grátis`);
   },
 );
